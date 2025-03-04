@@ -16,3 +16,21 @@ List<Map<String, dynamic>> categories = [
   {'name': 'Bread', 'icon': 'assets/icons/bread.png', 'color': 0xFFf9a825},
   {'name': 'Pizza', 'icon': 'assets/icons/pizza.png', 'color': 0xFF4db6ac},
 ];
+
+String sampleIngredientsWithMarkdownFormat = '''
+## Bahan-Bahan
+- 2 cups all-purpose flour
+- 1 cup warm water
+- 1 packet active dry yeast
+- 1 teaspoon sugar
+- 1 teaspoon salt
+- 2 tablespoons olive oil
+- 1/2 cup tomato sauce
+- 1 1/2 cups shredded mozzarella cheese
+- 1/2 cup sliced pepperoni
+- 1/4 cup sliced black olives
+- 1/4 cup sliced bell peppers
+- 1/4 cup sliced onions
+- 1 teaspoon dried oregano
+- 1 teaspoon dried basil
+''';

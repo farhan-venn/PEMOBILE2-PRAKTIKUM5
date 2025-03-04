@@ -4,6 +4,7 @@ import 'package:praktikum_5/components/food_categories.dart';
 import 'package:praktikum_5/components/item_card_recipe.dart';
 import 'package:praktikum_5/components/title_section.dart';
 import 'package:praktikum_5/configs/demo.dart';
+import 'package:praktikum_5/screens/recipe_detail_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -72,7 +73,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 (context, index) => ItemCardRecipe(
                   image: banners[index],
                   title: "Resep Makanan ${index + 1}",
-                  onTap: () {},
+                  onTap:
+                      () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => RecipeDetailScreen(),
+                        ),
+                      ),
                 ),
                 childCount: banners.length,
               ),
