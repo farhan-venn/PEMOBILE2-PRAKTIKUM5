@@ -1,7 +1,7 @@
 List<String> banners = [
-  '/assets/images/banner1.jpeg',
-  '/assets/images/banner2.jpeg',
-  '/assets/images/banner3.jpeg',
+  'assets/images/banner1.jpeg',
+  'assets/images/banner2.jpeg',
+  'assets/images/banner3.jpeg',
 ];
 
 List<Map<String, dynamic>> categories = [
