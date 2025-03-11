@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:praktikum_5/configs/demo.dart';
+import 'package:praktikum_5/models/recipe_model.dart';
+import 'package:praktikum_5/services/api_service.dart';
 
 class RecipeDetailScreen extends StatelessWidget {
-  const RecipeDetailScreen({Key? key}) : super(key: key);
+  final RecipeModel recipe;
+  const RecipeDetailScreen({Key? key, required this.recipe}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +17,7 @@ class RecipeDetailScreen extends StatelessWidget {
         title: Column(
           children: [
             Text(
-              'Pizza Mozarella'.toUpperCase(),
+              recipe.name!.toUpperCase(),
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
             ),
           ],
@@ -34,38 +36,49 @@ class RecipeDetailScreen extends StatelessWidget {
               children: [
                 Stack(
                   children: [
-                    Image.asset('assets/images/banner1.jpeg'),
-                    Column(
-                      children: [
-                        SizedBox(height: 200),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 16),
-                          child: Container(
-                            width: double.maxFinite,
-                            decoration: BoxDecoration(
-                              color: Colors.white, // 70% opacity
-                              borderRadius: BorderRadius.circular(12),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withAlpha(100),
-                                  spreadRadius: 1,
-                                  blurRadius: 7,
-                                  offset: Offset(0, 3),
-                                ),
-                              ],
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 16,
-                                vertical: 16,
-                              ),
-                              child: MarkdownBody(
-                                data: sampleIngredientsWithMarkdownFormat,
-                              ),
-                            ),
-                          ),
+                    Container(
+                      width: double.maxFinite,
+                      height: 300,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(12),
+                          bottomRight: Radius.circular(12),
                         ),
-                      ],
+                        child: Image.network(
+                          ApiService.getAsset(recipe.image),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    SizedBox(height: 200),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      child: Container(
+                        width: double.maxFinite,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(12),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withAlpha(100),
+                              spreadRadius: 1,
+                              blurRadius: 7,
+                              offset: Offset(0, 3),
+                            ),
+                          ],
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 16,
+                          ),
+                          child: MarkdownBody(data: recipe.ingredients!),
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -74,48 +87,10 @@ class RecipeDetailScreen extends StatelessWidget {
           ),
           SliverToBoxAdapter(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+              padding: EdgeInsets.symmetric(vertical: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Html(
-                    data: """
-                  <h2>Langkah-langkah</h2>
-                  <ol>
-                    <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-                    <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-                    <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-                    <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-                    <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-                    <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-                    <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-                    <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-                    <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-                    <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-                  </ol>
-                  """,
-                  ),
-                  // Text(
-                  //   'Langkah-langkah'.toUpperCase(),
-                  //   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
-                  // ),
-                  // SizedBox(height: 8),
-                  // Column(
-                  //   children: List.generate(
-                  //     10,
-                  //     (index) => ListTile(
-                  //       leading: CircleAvatar(
-                  //         backgroundColor: Colors.amber,
-                  //         child: Text('${index + 1}'),
-                  //       ),
-                  //       title: Text('Langkah ${index + 1}'),
-                  //       subtitle: Text(
-                  //         'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
-                ],
+                children: [Html(data: recipe.steps!)],
               ),
             ),
           ),
